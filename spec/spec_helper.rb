@@ -1,6 +1,6 @@
 require "rspec/its"
 
-require "feature"
+require "toggles"
 
 RSpec.configure do |config|
   config.order = "random"
