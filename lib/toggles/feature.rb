@@ -27,24 +27,28 @@ end
 #
 # `Feature::Test`, `Feature::Thing::One`, `Feature::Thing::Two` would be
 # available by default.
-Find.find("features") do |path|
-  if path.match(/\.ya?ml\Z/)
-    *directories, filename = path.chomp(File.extname(path)).split("/")
+#
+# TODO: Make this configurable.
+if File.directory?("features")
+  Find.find("features") do |path|
+    if path.match(/\.ya?ml\Z/)
+      *directories, filename = path.chomp(File.extname(path)).split("/")
 
-    previous = Feature
-    directories[1..-1].each do |directory|
-      module_name = directory.split("_").map(&:capitalize).join.to_sym
-      previous    = begin
-                      previous.const_get(module_name)
-                    rescue NameError
-                      previous.const_set(module_name, Module.new)
-                    end
+      previous = Feature
+      directories[1..-1].each do |directory|
+        module_name = directory.split("_").map(&:capitalize).join.to_sym
+        previous    = begin
+                        previous.const_get(module_name)
+                      rescue NameError
+                        previous.const_set(module_name, Module.new)
+                      end
+      end
+
+      cls = Class.new(Feature::Base) do |c|
+        c.const_set(:PERMISSIONS, Feature::Permissions.new(path))
+      end
+
+      previous.const_set(filename.split("_").map(&:capitalize).join.to_sym, cls)
     end
-
-    cls = Class.new(Feature::Base) do |c|
-      c.const_set(:PERMISSIONS, Feature::Permissions.new(path))
-    end
-
-    previous.const_set(filename.split("_").map(&:capitalize).join.to_sym, cls)
   end
 end
