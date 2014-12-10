@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "toggles"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
   s.authors = ["Andrew Tribone"]
   s.summary = "YAML backed feature toggles"
   s.email = "tribone@easypost.com"
