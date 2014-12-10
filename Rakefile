@@ -1,5 +1,1 @@
-task default: "foo"
-
-task :foo do
-  p "hi"
-end
+require "bundler/gem_tasks"
