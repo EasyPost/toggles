@@ -10,6 +10,7 @@ module Feature
                 gt:    Permissions::Operation::GreaterThan,
                 in:    Permissions::Operation::In,
                 lt:    Permissions::Operation::LessThan,
+                not:   Permissions::Operation::Not,
                 or:    Permissions::Operation::Or,
                 range: Permissions::Operation::Range}
 end

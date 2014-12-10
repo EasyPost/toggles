@@ -4,9 +4,7 @@ module Feature
       class And
         def self.call(entity, attr_name, expected)
           expected.all? do |operation, value|
-            OPERATIONS.fetch(operation.to_sym, Attribute).call(
-              entity, attr_name, value
-            )
+            OPERATIONS[operation.to_sym].call(entity, attr_name, value)
           end
         end
       end

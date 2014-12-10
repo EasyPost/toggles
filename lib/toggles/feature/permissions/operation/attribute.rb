@@ -5,9 +5,7 @@ module Feature
         def self.call(entity, attr_name, expected)
           if expected.kind_of? Hash
             expected.all? do |operation, value|
-              OPERATIONS.fetch(operation.to_sym, Operation::Attribute).call(
-                entity, attr_name, value
-              )
+              OPERATIONS[operation.to_sym].call(entity, attr_name, value)
             end
           else
             entity.send(attr_name) == expected
