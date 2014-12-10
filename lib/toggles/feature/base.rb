@@ -2,32 +2,26 @@ require "yaml"
 
 module Feature
   class Base
-    attr_reader :subjects, :rules
+    attr_reader :subjects
 
-    def self.enabled_for?(*args)
-      new(*args).enabled?
+    def self.enabled_for?(subjects = {})
+      new(subjects).enabled?
     end
 
-    def self.disabled_for?(*args)
-      !enabled_for?(*args)
+    def self.disabled_for?(subjects = {})
+      !enabled_for? subjects
     end
 
-    def initialize(*args)
-      @rules = Hash[args.map { |arg| [arg.class.name.downcase.to_sym, arg] }]
-      @subjects = @rules.keys
+    def initialize(subjects)
+      @subjects = subjects
+    end
+
+    def permissions
+      @permissions ||= self.class::PERMISSIONS
     end
 
     def enabled?
-      unless PERMISSIONS.subjects == subjects
-        raise Subject::Invalid,
-          Subject.difference(PERMISSIONS.subjects, subjects)
-      end
-
-      PERMISSIONS.all? do |name, permission|
-        permission.all? do |key, value|
-          rules[name.to_sym].send(key.to_sym) == value
-        end
-      end
+      permissions.valid_for? subjects
     end
   end
 end

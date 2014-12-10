@@ -1,0 +1,7 @@
+require "toggles/feature/permissions/operation/and"
+require "toggles/feature/permissions/operation/gt"
+require "toggles/feature/permissions/operation/in"
+require "toggles/feature/permissions/operation/lt"
+require "toggles/feature/permissions/operation/or"
+require "toggles/feature/permissions/operation/property"
+require "toggles/feature/permissions/operation/range"

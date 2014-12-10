@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    feature (0.0.1)
+    toggles (0.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -13,6 +13,11 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rake (10.4.1)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
@@ -36,8 +41,10 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  feature!
   pry
+  pry-nav
+  pry-remote
   rake
   rspec
   rspec-its
+  toggles!

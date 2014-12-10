@@ -1,0 +1,8 @@
+user:
+  id:
+    or:
+      in:
+        range:
+          - 1
+          - 10
+      gt: 50

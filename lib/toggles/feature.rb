@@ -3,8 +3,15 @@ require "find"
 require "toggles/feature/base"
 require "toggles/feature/subject"
 require "toggles/feature/permissions"
+require "toggles/feature/permissions/operation"
 
 module Feature
+  OPERATIONS = {and:   Permissions::Operation::And,
+                gt:    Permissions::Operation::GreaterThan,
+                in:    Permissions::Operation::In,
+                lt:    Permissions::Operation::LessThan,
+                or:    Permissions::Operation::Or,
+                range: Permissions::Operation::Range}
 end
 
 # Dynamically create modules and classes within the `Feature` module based on
@@ -34,8 +41,8 @@ Find.find("features") do |path|
                     end
     end
 
-    cls = Class.new(Feature::Base) do
-      PERMISSIONS = Feature::Permissions.new(path)
+    cls = Class.new(Feature::Base) do |c|
+      c.const_set(:PERMISSIONS, Feature::Permissions.new(path))
     end
 
     previous.const_set(filename.split("_").map(&:capitalize).join.to_sym, cls)

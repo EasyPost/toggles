@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
-  s.name = "feature"
-  s.version = "0.0.1"
+  s.name = "toggles"
+  s.version = "0.0.2"
   s.authors = ["Andrew Tribone"]
   s.summary = "YAML backed feature toggles"
   s.email = "tribone@easypost.com"
@@ -11,6 +11,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "pry"
+  s.add_development_dependency "pry-nav"
+  s.add_development_dependency "pry-remote"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-its"
