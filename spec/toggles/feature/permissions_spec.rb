@@ -18,7 +18,8 @@ describe Feature::Permissions do
 
     specify "invalid subjects" do
       expect { subject.valid_for?(user: double) }.
-        to raise_error Feature::Subject::Invalid, "Invalid subjects for permissions: [:widget]"
+        to raise_error Feature::Subject::Invalid,
+          "Invalid or missing subjects for permissions: [:widget]"
     end
   end
 end

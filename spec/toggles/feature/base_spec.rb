@@ -18,7 +18,8 @@ describe Feature::Base do
 
     specify "invalid permissions" do
       expect { Feature::Test.enabled_for?(widget: double) }.
-        to raise_error Feature::Subject::Invalid, "Invalid subjects for permissions: [:user]"
+        to raise_error Feature::Subject::Invalid,
+          "Invalid or missing subjects for permissions: [:user]"
     end
 
     specify "collection" do

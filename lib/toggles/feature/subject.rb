@@ -2,7 +2,7 @@ module Feature
   module Subject
     class Invalid < StandardError
       def initialize(args)
-        super("Invalid subjects for permissions: #{args}")
+        super("Invalid or missing subjects for permissions: #{args}")
       end
     end
 
