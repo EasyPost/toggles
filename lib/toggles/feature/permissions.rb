@@ -4,16 +4,12 @@ module Feature
   class Permissions
     extend Forwardable
 
-    attr_reader :path
+    attr_reader :rules
 
     def_delegators :rules, :all?, :keys
 
     def initialize(path)
-      @path = path
-    end
-
-    def rules
-      @rules ||= YAML.load(File.read(path))
+      @rules = YAML.load(File.read(path))
     end
 
     def subjects

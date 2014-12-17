@@ -3,7 +3,6 @@ describe Feature::Permissions do
 
   subject { Feature::Permissions.new(path) }
 
-  its(:path)     { is_expected.to eq path }
   its(:rules)    { is_expected.to eq({"user"=>{"id"=>1, "logged_in?"=>true},
                                       "widget"=>{"id"=>2}}) }
   its(:subjects) { [:user, :widget] }

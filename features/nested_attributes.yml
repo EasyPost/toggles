@@ -1,0 +1,12 @@
+foo:
+  bar:
+    not:
+      in:
+        - :one
+        - two
+  baz:
+    id:
+      or:
+        gt: 50
+        in:
+          - 10
