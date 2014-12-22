@@ -1,3 +1,4 @@
+require "ostruct"
 require "toggles/feature/permissions/operation"
 
 module Feature
@@ -22,10 +23,15 @@ module Feature
       end
 
       rules.all? do |name, rule|
+        entity = entities[name.to_sym]
+
+        if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
+          entity = OpenStruct.new(name => entity)
+          rule   = {name => rule}
+        end
+
         rule.all? do |key, value|
-          OPERATIONS.fetch(key, Operation::Attribute).call(
-            entities[name.to_sym], key, value
-          )
+          OPERATIONS.fetch(key, Operation::Attribute).call(entity, key, value)
         end
       end
     end

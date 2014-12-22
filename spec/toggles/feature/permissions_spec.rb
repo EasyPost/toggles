@@ -1,5 +1,5 @@
 describe Feature::Permissions do
-  let(:path) { "features/test.yml" }
+  let(:path) { "features/multiple_subjects.yml" }
 
   subject { Feature::Permissions.new(path) }
 
