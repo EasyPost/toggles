@@ -1,0 +1,8 @@
+require "toggles/feature/operation/and"
+require "toggles/feature/operation/attribute"
+require "toggles/feature/operation/gt"
+require "toggles/feature/operation/in"
+require "toggles/feature/operation/lt"
+require "toggles/feature/operation/not"
+require "toggles/feature/operation/or"
+require "toggles/feature/operation/range"

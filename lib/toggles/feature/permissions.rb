@@ -1,5 +1,4 @@
 require "ostruct"
-require "toggles/feature/permissions/operation"
 
 module Feature
   class Permissions

@@ -2,17 +2,17 @@ require "find"
 
 require "toggles/feature/base"
 require "toggles/feature/subject"
+require "toggles/feature/operation"
 require "toggles/feature/permissions"
-require "toggles/feature/permissions/operation"
 
 module Feature
-  OPERATIONS = {and:   Permissions::Operation::And,
-                gt:    Permissions::Operation::GreaterThan,
-                in:    Permissions::Operation::In,
-                lt:    Permissions::Operation::LessThan,
-                not:   Permissions::Operation::Not,
-                or:    Permissions::Operation::Or,
-                range: Permissions::Operation::Range}
+  OPERATIONS = {and:   Operation::And,
+                gt:    Operation::GreaterThan,
+                in:    Operation::In,
+                lt:    Operation::LessThan,
+                not:   Operation::Not,
+                or:    Operation::Or,
+                range: Operation::Range}
 end
 
 # Dynamically create modules and classes within the `Feature` module based on

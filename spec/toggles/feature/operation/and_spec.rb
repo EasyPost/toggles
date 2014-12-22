@@ -1,4 +1,4 @@
-describe Feature::Permissions::Operation::And do
+describe Feature::Operation::And do
   specify do
     [[60, true], [40, false], [80, false]].each do |(id, expected)|
       expect(

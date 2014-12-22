@@ -1,4 +1,4 @@
-describe Feature::Permissions::Operation::Attribute do
+describe Feature::Operation::Attribute do
   specify do
     expect(described_class.call(double(id: 50), :id, 50)).to eq true
     expect(described_class.call(double(id: 50), :id, 51)).to eq false
