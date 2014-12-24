@@ -30,7 +30,7 @@ module Feature
         end
 
         rule.all? do |key, value|
-          OPERATIONS.fetch(key, Operation::Attribute).call(entity, key, value)
+          OPERATIONS.fetch(key.to_sym, Operation::Attribute).call(entity, key, value)
         end
       end
     end

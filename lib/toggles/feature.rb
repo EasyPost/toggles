@@ -1,9 +1,9 @@
 require "find"
 
 require "toggles/feature/base"
-require "toggles/feature/subject"
 require "toggles/feature/operation"
 require "toggles/feature/permissions"
+require "toggles/feature/subject"
 
 module Feature
   OPERATIONS = {and:   Operation::And,

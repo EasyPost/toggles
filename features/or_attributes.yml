@@ -1,0 +1,4 @@
+user:
+  or:
+    foo: 20
+    bar: 30
