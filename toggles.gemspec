@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.authors = ["Andrew Tribone"]
   s.summary = "YAML backed feature toggles"
   s.email = "tribone@easypost.com"
-  s.homepage = ""
+  s.homepage = "https://github.com/att14/toggles"
   s.license = ""
   s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   s.test_files = s.files.grep(/^(spec)\//)
