@@ -1,4 +1,5 @@
 require "ostruct"
+require "forwardable"
 
 module Feature
   class Permissions
@@ -23,6 +24,10 @@ module Feature
 
       rules.all? do |name, rule|
         entity = entities[name.to_sym]
+
+        if entity.nil?
+          return false
+        end
 
         if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
           entity = OpenStruct.new(name => entity)
