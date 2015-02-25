@@ -24,7 +24,9 @@ module Feature
       rules.all? do |name, rule|
         entity = entities[name.to_sym]
 
-        if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
+        if entity.nil?
+          return false
+        elsif entity.class.ancestors.find { |ancestor| ancestor == Comparable }
           entity = OpenStruct.new(name => entity)
           rule   = {name => rule}
         end
