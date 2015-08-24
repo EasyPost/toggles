@@ -1,0 +1,9 @@
+data:
+  or:
+    id:
+      in: [1]
+    and:
+      id:
+        in: [2]
+      timestamp:
+        lt: 10
