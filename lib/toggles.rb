@@ -37,9 +37,9 @@ module Toggles
         previous = Feature
         directories.each do |directory|
           module_name = directory.split("_").map(&:capitalize).join.to_sym
-          previous    = begin
+          previous    = if previous.constants.include? module_name
                           previous.const_get(module_name)
-                        rescue NameError
+                        else
                           previous.const_set(module_name, Module.new)
                         end
         end
