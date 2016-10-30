@@ -20,7 +20,7 @@ To install the gem manually from your shell, run:
 gem install toggles
 ```
 
-## Usage
+## Configuration
 
 Configure `toggles`:
 
@@ -30,30 +30,7 @@ Toggles.configure do |config|
 end
 ```
 
-You can now express conditional logic as a DSL within YAML files within `features_dir`. For example if you wanted to limit a user's access to specific features until they contributed enough to the site we could create a feature. The rules are that once you've posted more than 10 times or commented on a post more 20 times you can then upvote other user's posts or comments. To do this we create a feature in the file `features/user/upvote.yml`.
-
-```yaml
-user:
-  or:
-    posts:
-      gt: 10
-    comments:
-      gt: 20
-```
-
-You can now check if the feature is enabled by running:
-
-```ruby
-Feature::User::Upvote.enabled_for?(user: OpenStruct.new(posts: 5, comments: 30)) # true
-Feature::User::Upvote.enabled_for?(user: OpenStruct.new(posts: 15, comments: 15)) # true
-Feature::User::Upvote.enabled_for?(user: OpenStruct.new(posts: 5, comments: 15)) # false
-
-Feature::User::Upvote.disabled_for?(user: OpenStruct.new(posts: 5, comments: 30)) # false
-Feature::User::Upvote.disabled_for?(user: OpenStruct.new(posts: 15, comments: 15)) # false
-Feature::User::Upvote.disabled_for?(user: OpenStruct.new(posts: 5, comments: 15)) # true
-```
-
-The structure of the `features_dir` determines the structure of the classes within the `Feature` module. For example if the `features_dir` has the structure:
+You can now express conditional logic within `features_dir`. The structure of the `features_dir` determines the structure of the classes within the `Feature` module. For example if the `features_dir` has the structure:
 
 ```
 features
@@ -64,3 +41,27 @@ features
 ```
 
 The classes `Feature::Test`, `Feature::Thing::One` and `Feature::Thing::Two` will be available for use within your application.
+
+## Usage
+
+Create a file in `features_dir`:
+
+```yaml
+user:
+  id:
+    in:
+      - 12345
+      - 54321
+```
+
+Check if the feature is enabled or disabled:
+
+```ruby
+Feature::NewFeature::AvailableForPresentation.enabled_for?(user: OpenStruct.new(id: 12345)) # true
+Feature::NewFeature::AvailableForPresentation.enabled_for?(user: OpenStruct.new(id: 54321)) # true
+Feature::NewFeature::AvailableForPresentation.enabled_for?(user: OpenStruct.new(id: 7)) # false
+
+Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new(id: 12345)) # false
+Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new(id: 54321)) # false
+Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new(id: 7)) # true
+```
