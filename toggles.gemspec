@@ -8,6 +8,12 @@ Gem::Specification.new do |s|
   s.license = "ISC"
   s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   s.test_files = s.files.grep(/^(spec)\//)
+  s.description = <<-EOF
+    YAML-backed implementation of the feature flags pattern. Build a
+    hierarchy of features in YAML files in the filesystem, apply various
+    conditions using boolean logic and a selection of filters, and easily
+    check whether a given feature should be applied.
+  EOF
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "pry"
