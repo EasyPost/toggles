@@ -1,6 +1,7 @@
 # Toggles
 
 [![Gem Version](https://badge.fury.io/rb/toggles.svg)](https://badge.fury.io/rb/toggles)
+[![CircleCI](https://circleci.com/gh/EasyPost/toggles.svg?style=svg)](https://circleci.com/gh/EasyPost/toggles)
 
 YAML backed feature toggles
 
