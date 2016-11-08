@@ -73,3 +73,7 @@ Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new
 Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new(id: 54321)) # false
 Feature::NewFeature::AvailableForPresentation.disabled_for?(user: OpenStruct.new(id: 7)) # true
 ```
+
+## License
+
+This project is licensed under the ISC License, the contents of which can be found at [LICENSE.txt](LICENSE.txt).
