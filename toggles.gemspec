@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = "toggles"
-  s.version = "0.1.1"
-  s.authors = ["Andrew Tribone"]
+  s.version = "0.1.2"
+  s.authors = ["Andrew Tribone", "James Brown"]
   s.summary = "YAML backed feature toggles"
-  s.email = "tribone@easypost.com"
-  s.homepage = "https://github.com/att14/toggles"
+  s.email = "oss@easypost.com"
+  s.homepage = "https://github.com/EasyPost/toggles"
   s.license = ""
   s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   s.test_files = s.files.grep(/^(spec)\//)
