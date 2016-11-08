@@ -1,11 +1,14 @@
 require "rspec/its"
+require 'rspec/temp_dir'
 
 require "toggles"
 
-Toggles.configure do |config|
-  config.features_dir = "features"
-end
-
 RSpec.configure do |config|
   config.order = "random"
+
+  config.before(:each) do
+    Toggles.configure do |c|
+      c.features_dir = "features"
+    end
+  end
 end

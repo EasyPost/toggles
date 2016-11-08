@@ -1,4 +1,4 @@
-describe Feature::NestedAttributes do
+describe "Feature::NestedAttributes" do
   specify do
     expect(Feature::NestedAttributes.enabled_for?(
         foo: double(bar: :two, baz: double(id: 51)))).to eq true

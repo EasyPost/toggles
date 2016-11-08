@@ -40,7 +40,14 @@ features
 └── test.yml
 ```
 
-The classes `Feature::Test`, `Feature::Thing::One` and `Feature::Thing::Two` will be available for use within your application.
+The classes `Feature::Test`, `Feature::Thing::One` and `Feature::Thing::Two` will be available for use within
+your application.
+
+You can call the `Toggles.init` method to force re-parsing the configuration and re-initializing all Features
+structures at any time. The `Toggles.reinit_if_necessary` method is a convenience helper which will only
+re-initialize of the top-level features directory has changed. Note that, in general, this will only detect
+changes if you use a system where you swap out the entire features directory on changes and do not edit
+individual files within the directory.
 
 ## Usage
 

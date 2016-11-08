@@ -1,5 +1,3 @@
-require "find"
-
 require "toggles/feature/base"
 require "toggles/feature/operation"
 require "toggles/feature/permissions"
@@ -13,4 +11,14 @@ module Feature
                 not:   Operation::Not,
                 or:    Operation::Or,
                 range: Operation::Range}
+
+  @@tree = Module.new
+
+  def self.set_tree(tree)
+    @@tree = tree
+  end
+
+  def self.const_missing(sym)
+    @@tree.const_get(sym, inherit: false)
+  end
 end

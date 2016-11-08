@@ -1,4 +1,4 @@
-describe Feature::OrAttributes do
+describe "Feature::OrAttributes" do
   specify do
     expect(Feature::OrAttributes.enabled_for?(
       user: double(foo: 20, bar: 10))).to eq true
