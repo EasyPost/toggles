@@ -14,11 +14,11 @@ module Feature
 
   @@tree = Module.new
 
-  def Feature.set_tree(tree)
+  def self.set_tree(tree)
     @@tree = tree
   end
 
-  def Feature.const_missing(sym)
+  def self.const_missing(sym)
     @@tree.const_get(sym, inherit: false)
   end
 end

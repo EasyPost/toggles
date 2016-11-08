@@ -81,7 +81,7 @@ module Toggles
   def reinit_if_changed
     # Reload the configuration if the top-level directory has changed.
     # Does not detect changes to files inside that directory unless your
-    #
+    # filesystem propagates mtimes.
     return unless Dir.exists? configuration.features_dir
     top_level = File.realpath(configuration.features_dir)
     stbuf = File.stat(top_level)

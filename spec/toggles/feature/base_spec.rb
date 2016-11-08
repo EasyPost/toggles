@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Feature::Base do
   let(:user)   { double(id: 1, logged_in?: true) }
   let(:widget) { double(id: 2) }

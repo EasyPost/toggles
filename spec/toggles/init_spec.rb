@@ -1,6 +1,3 @@
-require 'rspec/temp_dir'
-require 'spec_helper'
-
 describe Toggles do
   describe "#init" do
     include_context "uses temp dir"

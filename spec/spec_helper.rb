@@ -1,4 +1,5 @@
 require "rspec/its"
+require 'rspec/temp_dir'
 
 require "toggles"
 
