@@ -55,4 +55,33 @@ describe Toggles do
       expect { Feature::Foo::Children.enabled_for?(id: 1) }.to raise_error(NameError)
     end
   end
+
+  describe "#reinit_if_changed" do
+    include_context "uses temp dir"
+
+    it "reloads when the contents have changed" do
+      Dir.mkdir("#{temp_dir}/features")
+
+      Toggles.configure do |c|
+        c.features_dir = "#{temp_dir}/features"
+      end
+
+      Dir.delete("#{temp_dir}/features")
+      Dir.mkdir("#{temp_dir}/features")
+
+      expect(Toggles).to receive("init")
+      Toggles.reinit_if_changed
+    end
+
+    it "does not reload when the contents have not changed" do
+      Dir.mkdir("#{temp_dir}/features")
+
+      Toggles.configure do |c|
+        c.features_dir = "#{temp_dir}/features"
+      end
+
+      expect(Toggles).not_to receive("init")
+      Toggles.reinit_if_changed
+    end
+  end
 end

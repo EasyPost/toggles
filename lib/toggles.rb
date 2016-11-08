@@ -7,7 +7,10 @@ require "toggles/feature"
 module Toggles
   extend self
 
+  StatResult = Struct.new(:inode, :mtime)
+
   def configure
+    @stat_tuple ||= StatResult.new(0, 0)
     yield configuration
     init
   end
@@ -69,6 +72,23 @@ module Toggles
       end
     end
 
+    stbuf = File.stat(top_level)
+    @stat_tuple = StatResult.new(stbuf.ino, stbuf.mtime)
+
     Feature.set_tree(new_tree)
+  end
+
+  def reinit_if_changed
+    # Reload the configuration if the top-level directory has changed.
+    # Does not detect changes to files inside that directory unless your
+    #
+    return unless Dir.exists? configuration.features_dir
+    top_level = File.realpath(configuration.features_dir)
+    stbuf = File.stat(top_level)
+    stat_tuple = StatResult.new(stbuf.ino, stbuf.mtime)
+
+    if @stat_tuple != stat_tuple
+      init
+    end
   end
 end
