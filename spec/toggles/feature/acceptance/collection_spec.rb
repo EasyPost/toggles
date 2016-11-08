@@ -1,4 +1,6 @@
-describe Feature::Collection do
+require 'spec_helper'
+
+describe "Feature::Collection" do
   specify do
     expect(Feature::Collection.enabled_for?(user: double(id: 1))).to eq true
     expect(Feature::Collection.enabled_for?(user: double(id: 5))).to eq true
