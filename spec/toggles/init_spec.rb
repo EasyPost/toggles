@@ -63,8 +63,10 @@ describe Toggles do
         c.features_dir = "#{temp_dir}/features"
       end
 
+      # the OS might reuse the inode if we do this in the obvious order
+      Dir.mkdir("#{temp_dir}/features2")
       Dir.delete("#{temp_dir}/features")
-      Dir.mkdir("#{temp_dir}/features")
+      File.rename("#{temp_dir}/features2", "#{temp_dir}/features")
 
       expect(Toggles).to receive("init")
       Toggles.reinit_if_changed
