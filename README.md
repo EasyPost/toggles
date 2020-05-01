@@ -1,7 +1,7 @@
 # Toggles
 
 [![Gem Version](https://badge.fury.io/rb/toggles.svg)](https://badge.fury.io/rb/toggles)
-[![Build Status](https://travis-ci.org/EasyPost/toggles.svg?branch=master)](https://travis-ci.org/EasyPost/toggles)
+[![Build Status](https://travis-ci.com/EasyPost/toggles.svg?branch=master)](https://travis-ci.com/EasyPost/toggles)
 
 YAML backed feature toggles
 
