@@ -1,7 +1,7 @@
 # Toggles
 
 [![Gem Version](https://badge.fury.io/rb/toggles.svg)](https://badge.fury.io/rb/toggles)
-[![Build Status](https://travis-ci.com/EasyPost/toggles.svg?branch=master)](https://travis-ci.com/EasyPost/toggles)
+[![CI](https://github.com/EasyPost/toggles/workflows/CI/badge.svg)](https://github.com/EasyPost/toggles/actions?query=workflow%3ACI)
 
 YAML backed feature toggles
 
