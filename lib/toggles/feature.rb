@@ -21,4 +21,14 @@ module Feature
   def self.const_missing(sym)
     @@tree.const_get(sym, inherit: false)
   end
+
+  def self.enabled?(sym, **criteria)
+    @@tree.const_get(sym.to_s.split("_").map(&:capitalize).join(""), inherit: false)
+      &.enabled_for?(criteria)
+  end
+
+  def self.disabled?(sym, **criteria)
+    @@tree.const_get(sym.to_s.split("_").map(&:capitalize).join(""), inherit: false)
+      &.disabled_for?(criteria)
+  end
 end
