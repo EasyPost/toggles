@@ -17,7 +17,7 @@ class Feature::ConstantLookup
 
         def const_missing(sym)
           subtree_or_feature = features.fetch(
-            sym.to_s.gsub(/([a-z])([A-Z])/) { |s| s.chars[0] + "_" + s.chars[1] }.downcase.to_sym,
+            sym.to_s.gsub(/([a-z])([A-Z])/) { |s| s.chars.join('_') }.downcase.to_sym,
           )
           if subtree_or_feature.is_a?(Hash)
             Feature::ConstantLookup.from(subtree_or_feature, path + [sym])
