@@ -62,13 +62,13 @@ user:
 Check if the feature is enabled or disabled:
 
 ```ruby
-Feature.enabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 12345)) # true
-Feature.enabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 54321)) # true
-Feature.enabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 7)) # false
+Feature.enabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 12345)) # true
+Feature.enabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 54321)) # true
+Feature.enabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 7)) # false
 
-Feature.disabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 12345)) # false
-Feature.disabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 54321)) # false
-Feature.disabled_for?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 7)) # true
+Feature.disabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 12345)) # false
+Feature.disabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 54321)) # false
+Feature.disabled?(:new_feature, :available_for_presentation, user: OpenStruct.new(id: 7)) # true
 ```
 
 ## License
