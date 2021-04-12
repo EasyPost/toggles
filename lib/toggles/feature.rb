@@ -12,23 +12,56 @@ module Feature
                 or:    Operation::Or,
                 range: Operation::Range}
 
-  @@tree = Module.new
-
-  def self.set_tree(tree)
-    @@tree = tree
+  def self.features
+    @features ||= {}
   end
 
+  class Lookup
+    Error = Class.new(StandardError) do
+      attr_reader :sym
+
+      def initialize(sym)
+        @sym = sym
+        super(sym.join('::'))
+      end
+    end
+
+    def self.from(features, path)
+      Class.new do
+        class << self
+          attr_accessor :features
+          attr_accessor :path
+
+          def const_missing(sym)
+            subtree_or_feature = features.fetch(
+              sym.to_s.gsub(/([a-z])([A-Z])/) { |s| s.chars[0] + "_" + s.chars[1] }.downcase.to_sym,
+            )
+            if subtree_or_feature.is_a?(Hash)
+              Lookup.from(subtree_or_feature, path + [sym])
+            else
+              subtree_or_feature
+            end
+          rescue KeyError
+            raise Lookup::Error.new(path + [sym])
+          end
+        end
+      end.tap do |lookup|
+        lookup.features = features
+        lookup.path = path
+      end
+    end
+  end
+
+  # @deprecated This is an abuse of lazy dispatch that creates cryptic errors
   def self.const_missing(sym)
-    @@tree.const_get(sym, inherit: false)
+    Lookup.from(features, [:Feature]).const_missing(sym)
   end
 
   def self.enabled?(sym, **criteria)
-    @@tree.const_get(sym.to_s.split("_").map(&:capitalize).join(""), inherit: false)
-      &.enabled_for?(criteria)
+    features.fetch(sym).enabled_for?(criteria)
   end
 
   def self.disabled?(sym, **criteria)
-    @@tree.const_get(sym.to_s.split("_").map(&:capitalize).join(""), inherit: false)
-      &.disabled_for?(criteria)
+    features.fetch(sym).disabled_for?(criteria)
   end
 end
