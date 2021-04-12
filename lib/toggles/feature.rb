@@ -12,12 +12,15 @@ module Feature
                 or:    Operation::Or,
                 range: Operation::Range}
 
+  Error = Class.new(StandardError)
+  Unknown = Class.new(Error)
+
   def self.features
     @features ||= {}
   end
 
-  class Lookup
-    Error = Class.new(StandardError) do
+  class ConstantLookup
+    Error = Class.new(Feature::Error) do
       attr_reader :sym
 
       def initialize(sym)
@@ -37,12 +40,12 @@ module Feature
               sym.to_s.gsub(/([a-z])([A-Z])/) { |s| s.chars[0] + "_" + s.chars[1] }.downcase.to_sym,
             )
             if subtree_or_feature.is_a?(Hash)
-              Lookup.from(subtree_or_feature, path + [sym])
+              ConstantLookup.from(subtree_or_feature, path + [sym])
             else
               subtree_or_feature
             end
           rescue KeyError
-            raise Lookup::Error.new(path + [sym])
+            raise ConstantLookup::Error.new(path + [sym])
           end
         end
       end.tap do |lookup|
@@ -54,14 +57,22 @@ module Feature
 
   # @deprecated This is an abuse of lazy dispatch that creates cryptic errors
   def self.const_missing(sym)
-    Lookup.from(features, [:Feature]).const_missing(sym)
+    ConstantLookup.from(features, [:Feature]).const_missing(sym)
   end
 
-  def self.enabled?(sym, **criteria)
-    features.fetch(sym).enabled_for?(criteria)
+  def self.enabled?(*sym, **criteria)
+    sym
+      .inject(features) { |a, e| a.fetch(e) }
+      .enabled_for?(criteria)
+  rescue KeyError
+    raise Unknown, sym.inspect
   end
 
-  def self.disabled?(sym, **criteria)
-    features.fetch(sym).disabled_for?(criteria)
+  def self.disabled?(*sym, **criteria)
+    sym
+      .inject(features) { |a, e| a.fetch(e) }
+      .disabled_for?(criteria)
+  rescue KeyError
+    raise Unknown, sym.inspect
   end
 end

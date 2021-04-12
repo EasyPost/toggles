@@ -50,9 +50,9 @@ describe Toggles do
 
       expect(Feature::Foo::Users.enabled_for?(id: 1)).to eq(false)
       expect { Feature::Bar::Children.enabled_for?(id: 1) }
-        .to raise_error(Feature::Lookup::Error, 'Feature::Bar')
+        .to raise_error(Feature::ConstantLookup::Error, 'Feature::Bar')
       expect { Feature::Foo::Children.enabled_for?(id: 1) }
-        .to raise_error(Feature::Lookup::Error, 'Feature::Foo::Children')
+        .to raise_error(Feature::ConstantLookup::Error, 'Feature::Foo::Children')
     end
   end
 
