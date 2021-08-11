@@ -18,7 +18,7 @@ class Feature::ConstantLookup
   #
   # Defined at Toggles.features_dir + "/cat/bear_dog.yaml"
   #
-  # @raise [Error] if constant cannot be resoled
+  # @raise [Error] if constant cannot be resolved
   def self.from(features, path)
     Class.new {
       class << self
