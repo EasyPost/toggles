@@ -33,11 +33,7 @@ module Feature
   end
 
   def self.disabled?(*sym, **criteria)
-    sym
-      .inject(features) { |a, e| a.fetch(e) }
-      .disabled_for?(criteria)
-  rescue KeyError
-    raise Unknown, sym.inspect
+    !enabled?(*sym, **criteria)
   end
 end
 
