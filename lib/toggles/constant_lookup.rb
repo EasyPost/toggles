@@ -1,5 +1,5 @@
 class Feature::ConstantLookup
-  Error = Class.new(Feature::Error) do
+  Error = Class.new(NameError) do
     attr_reader :sym
 
     def initialize(sym)
