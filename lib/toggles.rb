@@ -1,5 +1,6 @@
 require "find"
 require "pathname"
+require "set"
 
 require "toggles/configuration"
 require "toggles/feature"
