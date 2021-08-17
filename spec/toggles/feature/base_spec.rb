@@ -10,8 +10,16 @@ describe Feature::Base do
     its('permissions.subjects') { is_expected.to eq %i[user widget] }
   end
 
-  context 'irregular capitalization' do
+  context 'abbreviation with numbers' do
     subject { Feature::AbbreviationsCN22.new(user: user) }
+
+    its(:enabled?)              do is_expected.to eq true end
+    its(:subjects)              do is_expected.to eq user: user end
+    its('permissions.subjects') { is_expected.to eq [:user] }
+  end
+
+  context 'irregular capitalization' do
+    subject { Feature::S3File.new(user: user) }
 
     its(:enabled?)              do is_expected.to eq true end
     its(:subjects)              do is_expected.to eq user: user end

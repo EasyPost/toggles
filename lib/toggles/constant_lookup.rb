@@ -26,16 +26,12 @@ class Feature::ConstantLookup
 
         def const_missing(sym)
           # translate class name into path part i.e :BearDog #=> 'bear_dog'
-          key =
-            sym
-            .to_s
-            .gsub(/([A-Z]{2,})/) { |s| s.chars.join('_') }
-            .gsub(/([a-z])([A-Z])/) { |s| s.chars.join('_') }
-            .downcase
-            .gsub(/([a-z])([0-9])/) { |s| s.chars.join('_') }
-            .to_sym
+          key = sym.to_s
+          key.gsub!(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2'.freeze)
+          key.gsub!(/([a-z\d])([A-Z])/, '\1_\2'.freeze)
+          key.downcase!
 
-          subtree_or_feature = features.fetch(key)
+          subtree_or_feature = features.fetch(key.to_sym)
 
           if subtree_or_feature.is_a?(Hash)
             Feature::ConstantLookup.from(subtree_or_feature, path + [sym])
