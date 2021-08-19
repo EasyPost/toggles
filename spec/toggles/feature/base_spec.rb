@@ -25,4 +25,12 @@ describe Feature::Base do
     its(:subjects)              do is_expected.to eq user: user end
     its('permissions.subjects') { is_expected.to eq [:user] }
   end
+
+  context 'irregular capitalization' do
+    subject { Feature::FileS3.new(user: user) }
+
+    its(:enabled?)              do is_expected.to eq true end
+    its(:subjects)              do is_expected.to eq user: user end
+    its('permissions.subjects') { is_expected.to eq [:user] }
+  end
 end
