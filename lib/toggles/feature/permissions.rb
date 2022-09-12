@@ -1,42 +1,36 @@
-require "ostruct"
-require "forwardable"
+require 'ostruct'
+require 'forwardable'
 
-module Feature
-  class Permissions
-    extend Forwardable
+class Feature::Permissions
+  extend Forwardable
 
-    attr_reader :rules
+  attr_reader :rules
 
-    def_delegators :rules, :all?, :keys
+  def_delegators :rules, :all?, :keys
 
-    def initialize(path)
-      @rules = YAML.load(File.read(path))
-    end
+  def initialize(path)
+    @rules = YAML.load(File.read(path))
+  end
 
-    def subjects
-      @subjects ||= keys.map(&:to_sym)
-    end
+  def subjects
+    @subjects ||= keys.map(&:to_sym)
+  end
 
-    def valid_for?(entities)
-      unless subjects == entities.keys
-        raise Subject::Invalid, Subject.difference(subjects, entities.keys)
+  def valid_for?(entities)
+    raise Feature::Subject::Invalid, Feature::Subject.difference(subjects, entities.keys) unless subjects == entities.keys
+
+    rules.all? do |name, rule|
+      entity = entities[name.to_sym]
+
+      return false if entity.nil?
+
+      if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
+        entity = OpenStruct.new(name => entity)
+        rule   = { name => rule }
       end
 
-      rules.all? do |name, rule|
-        entity = entities[name.to_sym]
-
-        if entity.nil?
-          return false
-        end
-
-        if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
-          entity = OpenStruct.new(name => entity)
-          rule   = {name => rule}
-        end
-
-        rule.all? do |key, value|
-          OPERATIONS.fetch(key.to_sym, Operation::Attribute).call(entity, key, value)
-        end
+      rule.all? do |key, value|
+        Feature.operations.fetch(key.to_sym, Feature::Attribute).call(entity, key, value)
       end
     end
   end

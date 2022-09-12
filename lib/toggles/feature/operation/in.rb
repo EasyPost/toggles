@@ -4,7 +4,7 @@ module Feature
       def self.call(entity, attr_name, expected)
         if expected.kind_of? Hash
           expected = expected.reduce([]) do |list, (operation, args)|
-            OPERATIONS[operation.to_sym].call(args)
+            Feature.operations[operation.to_sym].call(args)
           end
         end
 
