@@ -1,7 +1,7 @@
 describe Feature::Permissions do
   let(:path) { "features/multiple_subjects.yml" }
 
-  subject { Feature::Permissions.new(path) }
+  subject { Feature::Permissions.from_yaml(path) }
 
   its(:rules)    { is_expected.to eq({"user"=>{"id"=>1, "logged_in?"=>true},
                                       "widget"=>{"id"=>2}}) }

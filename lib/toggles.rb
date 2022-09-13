@@ -34,9 +34,7 @@ module Toggles
       path = Pathname.new(abspath).relative_path_from(top_level_p).to_s
       features = path.split('/')[0..-2].inject(Feature.features) { |a, e| a[e.to_sym] ||= {} }
       feature_key = File.basename(path, File.extname(path)).to_sym
-      features[feature_key] = Class.new(Feature::Base) do |c|
-        c.const_set(:PERMISSIONS, Feature::Permissions.new(abspath))
-      end
+      features[feature_key] = Feature::Permissions.from_yaml(abspath)
     end
 
     stbuf = File.stat(top_level)

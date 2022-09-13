@@ -31,7 +31,6 @@ module Feature
 end
 
 require 'toggles/constant_lookup'
-require "toggles/feature/base"
 require "toggles/feature/attribute"
 require "toggles/feature/permissions"
 require "toggles/feature/subject"
