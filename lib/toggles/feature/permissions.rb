@@ -1,5 +1,5 @@
-require "ostruct"
-require "forwardable"
+require 'ostruct'
+require 'forwardable'
 require 'yaml'
 
 Feature::Permissions = Struct.new(:rules) do
@@ -25,13 +25,11 @@ Feature::Permissions = Struct.new(:rules) do
     rules.all? do |name, rule|
       entity = entities[name.to_sym]
 
-      if entity.nil?
-        return false
-      end
+      return false if entity.nil?
 
       if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
         entity = OpenStruct.new(name => entity)
-        rule   = {name => rule}
+        rule   = { name => rule }
       end
 
       rule.all? do |key, value|
