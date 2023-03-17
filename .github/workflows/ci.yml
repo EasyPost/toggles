@@ -14,11 +14,14 @@ jobs:
       matrix:
         rubyversion: ['2.7', '3.0', '3.1']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: set up ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.rubyversion }}
+          rubygems: "3.0.0"
           bundler-cache: true
+      - name: Install Dependencies
+        run: make install
       - name: run tests
-        run: bundle exec rspec
+        run: make test

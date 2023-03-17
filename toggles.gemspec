@@ -21,9 +21,9 @@ Gem::Specification.new do |s|
     check whether a given feature should be applied.
   EOF
 
-  s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rspec-its'
-  s.add_development_dependency 'rspec-temp_dir'
+  s.add_development_dependency 'bundler', '~> 2.0'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rspec', '~> 3.10'
+  s.add_development_dependency 'rspec-its', '~> 1.3'
+  s.add_development_dependency 'rspec-temp_dir', '~> 1.1'
 end
