@@ -17,6 +17,8 @@ describe Feature::Permissions do
 
     specify 'subjects can be specified in any order' do
       expect(subject.valid_for?(widget: double(id: 2),
+                                user: double(id: 1, logged_in?: true))).to eq true
+      expect(subject.valid_for?(widget: double(id: 2),
                                 user: double(id: 2, logged_in?: true))).to eq false
     end
 
