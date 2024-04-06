@@ -18,8 +18,9 @@ Feature::Permissions = Struct.new(:rules) do
   end
 
   def valid_for?(entities)
-    unless subjects == entities.keys
-      raise Feature::Subject::Invalid, Feature::Subject.difference(subjects, entities.keys)
+    subject_difference = Feature::Subject.difference(subjects, entities.keys)
+    if subject_difference.any?
+      raise Feature::Subject::Invalid, subject_difference
     end
 
     rules.all? do |name, rule|

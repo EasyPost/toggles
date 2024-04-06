@@ -15,6 +15,11 @@ describe Feature::Permissions do
                                 widget: double(id: 2))).to eq false
     end
 
+    specify 'subjects can be specified in any order' do
+      expect(subject.valid_for?(widget: double(id: 2),
+                                user: double(id: 2, logged_in?: true))).to eq false
+    end
+
     specify "invalid subjects" do
       expect { subject.valid_for?(user: double) }.
         to raise_error Feature::Subject::Invalid,
