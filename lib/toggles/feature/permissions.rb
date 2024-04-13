@@ -18,25 +18,30 @@ Feature::Permissions = Struct.new(:rules) do
   end
 
   def valid_for?(entities)
-    subject_difference = Feature::Subject.difference(subjects, entities.keys)
-    if subject_difference.any?
-      raise Feature::Subject::Invalid, subject_difference
+    invalid_subjects = entities.keys - subjects
+    if invalid_subjects.any?
+      raise Feature::Subject::NotApplicable, invalid_subjects
     end
 
-    rules.all? do |name, rule|
-      entity = entities[name.to_sym]
+    subject_rules = rules.select { |name, _| entities.key?(name.to_sym) }
 
-      return false if entity.nil?
+    raise Feature::Subject::Empty if subject_rules.empty?
 
-      if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
-        entity = OpenStruct.new(name => entity)
-        rule   = { name => rule }
+    subject_rules
+      .all? do |name, rule|
+        entity = entities[name.to_sym]
+
+        return false if entity.nil?
+
+        if entity.class.ancestors.find { |ancestor| ancestor == Comparable }
+          entity = OpenStruct.new(name => entity)
+          rule   = { name => rule }
+        end
+
+        rule.all? do |key, value|
+          Feature.operations.fetch(key.to_sym, Feature::Attribute).call(entity, key, value)
+        end
       end
-
-      rule.all? do |key, value|
-        Feature.operations.fetch(key.to_sym, Feature::Attribute).call(entity, key, value)
-      end
-    end
   end
 
   def enabled_for?(subjects = {})

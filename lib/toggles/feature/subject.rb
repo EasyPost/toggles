@@ -6,8 +6,13 @@ module Feature
       end
     end
 
-    def self.difference(subjects, others)
-      Set.new((subjects - others) + (others - subjects)).to_a
+    class NotApplicable < StandardError
+      def initialize(args)
+        super("Subjects not applicable for permissions: #{args}")
+      end
+    end
+
+    class Empty < StandardError
     end
   end
 end
