@@ -1,5 +1,5 @@
 # frozen_string_literal: true
- 
+
 RSpec.describe 'operations' do
   context 'and' do
     subject { Feature.operations[:and] }
@@ -19,6 +19,10 @@ RSpec.describe 'operations' do
     specify do
       expect(subject.call(double(id: 50), :id, 40)).to eq true
       expect(subject.call(double(id: 50), :id, 60)).to eq false
+      expect(subject.call(double(id: 5_500_000), :id, "6e+06")).to eq false
+      expect(subject.call(double(id: 5_500_000), :id, 6e+06)).to eq false
+      expect(subject.call(double(id: 6_500_000), :id, "6e+06")).to eq true
+      expect(subject.call(double(id: 6_500_000), :id, 6e+06)).to eq true
     end
   end
 
@@ -38,6 +42,10 @@ RSpec.describe 'operations' do
     specify do
       expect(subject.call(double(id: 50), :id, 60)).to eq true
       expect(subject.call(double(id: 50), :id, 40)).to eq false
+      expect(subject.call(double(id: 5_500_000), :id, "6e+06")).to eq true
+      expect(subject.call(double(id: 5_500_000), :id, 6e+06)).to eq true
+      expect(subject.call(double(id: 6_500_000), :id, "6e+06")).to eq false
+      expect(subject.call(double(id: 6_500_000), :id, 6e+06)).to eq false
     end
   end
 
