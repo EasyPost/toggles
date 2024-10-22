@@ -1,5 +1,5 @@
 # frozen_string_literal: true
- 
+
 module Feature
   Error = Class.new(StandardError)
   Unknown = Class.new(Error)
@@ -75,8 +75,8 @@ Feature.operations[:or] = lambda { |entity, attr_name, expected|
   end
 }
 
-Feature.operations[:gt] = ->(entity, attr_name, expected) { entity.send(attr_name) > expected }
-Feature.operations[:lt] = ->(entity, attr_name, expected) { entity.send(attr_name) < expected }
+Feature.operations[:gt] = ->(entity, attr_name, expected) { entity.send(attr_name) > expected.to_f }
+Feature.operations[:lt] = ->(entity, attr_name, expected) { entity.send(attr_name) < expected.to_f }
 Feature.operations[:range] = lambda { |args|
   raise StandardError, 'Invalid range operation' if args.size != 2
 
